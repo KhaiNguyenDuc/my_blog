@@ -6,6 +6,9 @@ import AdminLayout from "../layouts/Admin/AdminLayout"
 import User from "../pages/Client/User"
 import Users from "../pages/Admin/User"
 import Category from "../pages/Client/Category"
+import Login from "../pages/Client/Login"
+import Register from "../pages/Client/Register"
+import Blog from "../pages/Client/Blog"
 
 const privateRoutes=[
     {
@@ -36,6 +39,21 @@ const publicRoutes = [
     {
         path: routes.client.category,
         page: Category,
+        layout: ClientLayout
+    },
+    {
+        path: routes.client.login,
+        page: Login,
+        layout: ClientLayout
+    },
+    {
+        path: routes.client.register,
+        page: Register,
+        layout: ClientLayout
+    },
+    {
+        path: routes.client.blog,
+        page: Blog,
         layout: ClientLayout
     }
 ]

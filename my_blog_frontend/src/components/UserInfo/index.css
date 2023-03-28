@@ -1,0 +1,4 @@
+.user-info h3 span {
+    text-decoration: underline solid brown;
+    text-underline-offset: 15px;
+}

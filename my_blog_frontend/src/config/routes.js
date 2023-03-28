@@ -6,7 +6,10 @@ const routes = {
     client: {
         home: '/',
         user: '/user/',
-        category: '/category'
+        category: '/category',
+        login: '/auth/login',
+        register: '/auth/register',
+        blog: '/blog'
     }
 }
 

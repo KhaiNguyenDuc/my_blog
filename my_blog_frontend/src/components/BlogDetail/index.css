@@ -1,0 +1,8 @@
+.blog-detail {
+    text-align: start;
+}
+
+.blog-detail h2 span {
+    text-decoration: underline solid brown;
+    text-underline-offset: 10px;
+}
