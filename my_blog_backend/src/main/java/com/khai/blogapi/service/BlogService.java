@@ -1,5 +1,7 @@
 package com.khai.blogapi.service;
 
+import java.util.List;
+
 import com.khai.blogapi.payload.ApiResponse;
 import com.khai.blogapi.payload.BlogRequest;
 import com.khai.blogapi.payload.BlogResponse;
@@ -25,6 +27,8 @@ public interface BlogService {
 	BlogResponse updateBlogById(Long blogId, BlogRequest blogRequest, UserPrincipal userPrincipal);
 
 	PageResponse<BlogResponse> getBlogsByUsername(String username, Integer page, Integer size);
+
+	List<BlogResponse> getLatestBlogs();
 
 
 }

@@ -1,5 +1,7 @@
 package com.khai.blogapi.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,10 +36,8 @@ public class TagController {
 	BlogService blogService;
 	
 	@GetMapping
-	public ResponseEntity<PageResponse<TagResponse>> getAllTags(
-			@RequestParam(value = "page", required = false, defaultValue =  AppConstant.DEFAULT_PAGE_NUMBER) Integer page,
-			@RequestParam(value = "size", required = false, defaultValue = AppConstant.DEFAULT_PAGE_SIZE) Integer size){
-		PageResponse<TagResponse> tagResponses = tagService.getAllTags(page,size);
+	public ResponseEntity<List<TagResponse>> getAllTags(){
+		List<TagResponse> tagResponses = tagService.getAllTags();
 		return new ResponseEntity<>(tagResponses,HttpStatus.OK);
 	}
 	

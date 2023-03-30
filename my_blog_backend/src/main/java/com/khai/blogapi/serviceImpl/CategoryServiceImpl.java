@@ -20,6 +20,7 @@ import com.khai.blogapi.model.Category;
 import com.khai.blogapi.model.RoleName;
 import com.khai.blogapi.model.User;
 import com.khai.blogapi.payload.ApiResponse;
+import com.khai.blogapi.payload.CategoryDescriptionResponse;
 import com.khai.blogapi.payload.CategoryRequest;
 import com.khai.blogapi.payload.CategoryResponse;
 import com.khai.blogapi.payload.PageResponse;
@@ -43,23 +44,13 @@ public class CategoryServiceImpl implements CategoryService {
 	ModelMapper modelMapper;
 
 	@Override
-	public PageResponse<CategoryResponse> getAllCategories(Integer page, Integer size) {
-		AppUtils.validatePageAndSize(page, size);
-		Pageable pageable = PageRequest.of(page, size);
-
-		Page<Category> categories = categoryRepository.findAll(pageable);
+	public List<CategoryResponse> getAllCategories() {
+		
+		List<Category> categories = categoryRepository.findAll();
 		List<CategoryResponse> categoryResponses = Arrays
-				.asList(modelMapper.map(categories.getContent(), CategoryResponse[].class));
+				.asList(modelMapper.map(categories, CategoryResponse[].class));
 
-		PageResponse<CategoryResponse> pageResponse = new PageResponse<>();
-		pageResponse.setContent(categoryResponses);
-		pageResponse.setPage(page);
-		pageResponse.setSize(size);
-		pageResponse.setTotalElements(categories.getNumberOfElements());
-		pageResponse.setTotalPages(categories.getTotalPages());
-		pageResponse.setLast(categories.isLast());
-
-		return pageResponse;
+		return categoryResponses;
 	}
 
 	@Override
@@ -157,5 +148,15 @@ public class CategoryServiceImpl implements CategoryService {
 
 		return pageResponse;
 	}
+
+	@Override
+	public CategoryDescriptionResponse getDescriptionByCategoryId(Long categoryId) {
+		Category category = categoryRepository.findById(categoryId)
+				.orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + categoryId));
+
+		return modelMapper.map(category, CategoryDescriptionResponse.class);
+	}
+
+
 
 }

@@ -1,5 +1,7 @@
 package com.khai.blogapi.service;
 
+import java.util.List;
+
 import com.khai.blogapi.payload.ApiResponse;
 import com.khai.blogapi.payload.CommentRequest;
 import com.khai.blogapi.payload.CommentResponse;
@@ -8,7 +10,7 @@ import com.khai.blogapi.security.UserPrincipal;
 
 public interface CommentService {
 
-	PageResponse<CommentResponse> getAllComments(Integer page, Integer size);
+	List<CommentResponse> getAllComments();
 
 	CommentResponse getCommentById(Long commentId);
 

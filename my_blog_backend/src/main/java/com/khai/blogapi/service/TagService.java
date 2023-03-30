@@ -1,7 +1,8 @@
 package com.khai.blogapi.service;
 
+import java.util.List;
+
 import com.khai.blogapi.payload.ApiResponse;
-import com.khai.blogapi.payload.PageResponse;
 import com.khai.blogapi.payload.TagRequest;
 import com.khai.blogapi.payload.TagResponse;
 import com.khai.blogapi.security.UserPrincipal;
@@ -10,9 +11,9 @@ public interface TagService {
 
 	TagResponse getTagById(Long tagId);
 
-	PageResponse<TagResponse> getTagsByBlog(Long blogId, Integer page, Integer size);
+	List<TagResponse> getTagsByBlog(Long blogId);
 
-	PageResponse<TagResponse> getAllTags(Integer page, Integer size);
+	List<TagResponse> getAllTags();
 
 	TagResponse addTag(TagRequest tagRequest);
 

@@ -37,7 +37,7 @@ const publicRoutes = [
         layout: ClientLayout
     },
     {
-        path: routes.client.category,
+        path: routes.client.category + '/:id',
         page: Category,
         layout: ClientLayout
     },

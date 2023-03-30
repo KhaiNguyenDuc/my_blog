@@ -261,5 +261,13 @@ public class BlogServiceImpl implements BlogService {
 
 		return pageResponse;
 	}
+
+	@Override
+	public List<BlogResponse> getLatestBlogs() {
+		List<Blog> blogs = blogRepository.findTop5ByOrderByCreatedAtDesc();
+		List<BlogResponse> blogResponses = Arrays.asList(modelMapper.map(blogs, BlogResponse[].class));
+
+		return blogResponses;
+	}
 	
 }

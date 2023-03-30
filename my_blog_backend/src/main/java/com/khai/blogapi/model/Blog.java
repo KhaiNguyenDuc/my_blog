@@ -103,6 +103,10 @@ public class Blog extends UserDateAudit{
 		}
 	}
 	
+	public int getCommentCount() {
+		return this.comments.size();
+	}
+	
 	
 	
 }

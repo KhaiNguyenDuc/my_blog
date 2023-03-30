@@ -1,5 +1,7 @@
 package com.khai.blogapi.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.khai.blogapi.payload.ApiResponse;
 import com.khai.blogapi.payload.BlogResponse;
+import com.khai.blogapi.payload.CategoryDescriptionResponse;
 import com.khai.blogapi.payload.CategoryRequest;
 import com.khai.blogapi.payload.CategoryResponse;
 import com.khai.blogapi.payload.PageResponse;
@@ -36,12 +39,9 @@ public class CategoryController {
 	BlogService blogService;
 	
 	@GetMapping
-	public ResponseEntity<PageResponse<CategoryResponse>> getAllCategories(
-			@RequestParam(value = "page", defaultValue = AppConstant.DEFAULT_PAGE_NUMBER) Integer page,
-			@RequestParam(value = "size", defaultValue = AppConstant.DEFAULT_PAGE_SIZE) Integer size
-			){
-		PageResponse<CategoryResponse> categoryResponse = 
-				categoryService.getAllCategories(page,size); 
+	public ResponseEntity<List<CategoryResponse>> getAllCategories(){
+		List<CategoryResponse> categoryResponse = 
+				categoryService.getAllCategories(); 
 		return new ResponseEntity<>(categoryResponse,HttpStatus.OK);
 	}
 	
@@ -107,6 +107,14 @@ public class CategoryController {
 				categoryService.updateCategoryById(categoryId,categoryRequest,userPrincipal);
 		return new ResponseEntity<>(categoryResponse,HttpStatus.OK);
 	} 
+	
+	
+	@GetMapping("/{category_id}/description")
+	public ResponseEntity<CategoryDescriptionResponse> getDescriptionByCategoryId(
+			@PathVariable("category_id") Long categoryId){
+		CategoryDescriptionResponse categoryResponse = categoryService.getDescriptionByCategoryId(categoryId);
+		return new ResponseEntity<>(categoryResponse,HttpStatus.OK);
+	}
 	
 	
 	

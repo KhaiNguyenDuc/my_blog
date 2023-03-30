@@ -1,86 +1,52 @@
+import { useEffect, useState } from "react";
 import CategoryDescription from "../../../components/CategoryDescription";
 import ListBlogs from "../../../components/ListBlogs";
 import SideSection from "../../../components/SideSection";
+import BlogService from "../../../services/BlogService";
+import { useParams } from "react-router-dom";
+import CategoryService from "../../../services/CategoryService";
+
 const Category = () => {
+    
+    const [blogs,setBlogs] = useState([])
+    const { id } = useParams()
+    const [latestBlogs,setLatesBlogs] = useState([])
+    const [cateDescription,setCateDescription] = useState([])
+    useEffect(() => {
+        getBlogsByCategoryId(id)
+        getCategoryDescription(id)
+        getLatestBlogs()
+    },[id])
 
 
-    const blogs = [
-        {
-            id: 1,
-            title: 'This is title',
-            author: 'Nguyen Duc Khai',
-            createAt: "28/03/2023",
-            totalComment: 3,
-            subTitle: "This is sub title for this blog"
-        },
-        {
-            id: 2,
-            title: 'This is title 2',
-            author: 'Nguyen Duc Khai 2',
-            createAt: "28/03/2023",
-            totalComment: 1,
-            subTitle: "This is sub title for this blog 2"
-        },
-        {
-            id: 3,
-            title: 'This is title 2',
-            author: 'Nguyen Duc Khai 2',
-            createAt: "28/03/2023",
-            totalComment: 1,
-            subTitle: "This is sub title for this blog 2"
+    const getBlogsByCategoryId = async (id) =>{
+        try{
+            const response = await BlogService.getBlogsByCategoryId(id)
+            setBlogs(response.data)
+        }catch (error){
+            console.log(error)
         }
-    ]
+        
+    }
 
-    const latestBlogs = [
-        {
-            id: 1,
-            title: 'This is title',
-            author: 'Nguyen Duc Khai',
-            createAt: "28/03/2023",
-            totalComment: 3,
-            subTitle: "This is sub title for this blog"
-        },
-        {
-            id: 2,
-            title: 'This is title 2',
-            author: 'Nguyen Duc Khai 2',
-            createAt: "28/03/2023",
-            totalComment: 1,
-            subTitle: "This is sub title for this blog 2"
-        },
-        {
-            id: 3,
-            title: 'This is title 2',
-            author: 'Nguyen Duc Khai 2',
-            createAt: "28/03/2023",
-            totalComment: 1,
-            subTitle: "This is sub title for this blog 2"
-        },
-        {
-            id: 4,
-            title: 'This is title 2',
-            author: 'Nguyen Duc Khai 2',
-            createAt: "28/03/2023",
-            totalComment: 1,
-            subTitle: "This is sub title for this blog 2"
-        },
-        {
-            id: 5,
-            title: 'This is title 2',
-            author: 'Nguyen Duc Khai 2',
-            createAt: "28/03/2023",
-            totalComment: 1,
-            subTitle: "This is sub title for this blog 2"
-        },
-        {
-            id: 6,
-            title: 'This is title 2',
-            author: 'Nguyen Duc Khai 2',
-            createAt: "28/03/2023",
-            totalComment: 1,
-            subTitle: "This is sub title for this blog 2"
+    const getLatestBlogs = async () =>{
+        try{
+            const response = await BlogService.getLatestBlogs()
+            setLatesBlogs(response.data)
+        }catch (error){
+            console.log(error)
         }
-    ]
+        
+    }
+
+    const getCategoryDescription = async (id) => {
+        try{
+            const response = await CategoryService.getCategoryDescription(id)
+            setCateDescription(response.data)
+        }catch (error){
+            console.log(error)
+        }
+    }
 
     const user = {
         fullName:"Nguyễn Đức Khải",
@@ -90,7 +56,7 @@ const Category = () => {
     return (
         <>
 
-            <CategoryDescription title="Title đây" description="this is descritpion" />
+            <CategoryDescription title={cateDescription.title} description={cateDescription.description} />
 
             <div className="row container-fluid justify-content-center mt-5">
 

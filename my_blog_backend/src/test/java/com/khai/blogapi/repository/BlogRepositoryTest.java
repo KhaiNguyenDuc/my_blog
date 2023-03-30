@@ -165,22 +165,35 @@ class BlogRepositoryTest {
 
 		User user = userRepository.findById(1L).get();
 		
-		// create category request
-		CategoryRequest categoryRequest = new CategoryRequest();
+		// create category 1
+		Category category1 = new Category();
+		category1.setName("Đời sống");
+		category1.setTitle("Cuộc sống thật yên bình");
+		category1.setDescription("Văn hay chữ đẹp về cuộc sống");
+		category1.setSlug("doi-song");
+		category1.setUser(user);
+		categoryRepository.save(category1);
+		
+		// create category 1
+		Category category2 = new Category();
+		category2.setName("Machine learning");
+		category2.setTitle("Cuộc sống thật yên bình");
+		category2.setDescription("Văn hay chữ đẹp về cuộc sống");
+		category2.setSlug("machine-learning");
+		category2.setUser(user);
+		categoryRepository.save(category2);
+				
+		// create category 1
+		Category category3 = new Category();
+		category3.setName("Thủ thuật");
+		category3.setTitle("Thủ thuật hay về máy tính");
+		category3.setDescription("Tập hợp các thủ thuật hay về máy tính");
+		category3.setSlug("thu-thuat");
+		category3.setUser(user);
+		categoryRepository.save(category3);
 
-		categoryRequest.setName("Spring boot rest api");
-		categoryRequest.setTitle("This is title for spring boot rest api");
-		categoryRequest.setDescription("Description");
-		// map categoryRequest with category model
-		Category cate = modelMapper.map(categoryRequest, Category.class);
-		cate.setUser(user);
-		categoryRepository.save(cate);
-
-		// test that cate equals cateRequest
-		assertThat(cate.equals(categoryRequest));
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	@Order(4)
 	void testCreateBlog() {
@@ -188,23 +201,98 @@ class BlogRepositoryTest {
 		List<Tag> tags = tagRepository.findAll();
 		
 		User user = userRepository.findById(1L).get();
-		BlogRequest blogRequest = new BlogRequest();
-
-		blogRequest.setImage("Image link");
-		blogRequest.setBody("Body");
-		blogRequest.setPublished(true);
-		blogRequest.setDescription("This is description");
-		blogRequest.setTitle("This is title");
-		blogRequest.setViews(1L);
-		blogRequest.setCategoryId(1L);
-
 		
-		Blog blog = modelMapper.map(blogRequest, Blog.class);
-		blog.setUser(user);
-		blog.setTags(tags);
-		blogRepository.save(blog);
+		Category category1 = categoryRepository.findById(1L).get();
+		Category category2 = categoryRepository.findById(2L).get();
+		Category category3 = categoryRepository.findById(3L).get();
+		
+		Blog blog1 = new Blog();
+		blog1.setImage("Image link");
+		blog1.setBody("Body");
+		blog1.setPublished(true);
+		blog1.setDescription("This is description");
+		blog1.setTitle("This is title");
+		blog1.setViews(1L);
+		blog1.setCategory(category1);
+		blog1.setUser(user);
+		blog1.setTags(tags);
+		blogRepository.save(blog1);
+		
+		// Create and save blog 2
+		Blog blog2 = new Blog();
+		blog2.setImage("Image link 2");
+		blog2.setBody("Body 2");
+		blog2.setPublished(true);
+		blog2.setDescription("This is description 2");
+		blog2.setTitle("This is title 2");
+		blog2.setViews(2L);
+		blog2.setCategory(category2);
+		blog2.setUser(user);
+		blog2.setTags(tags);
+		blogRepository.save(blog2);
 
-		assertThat(blog.equals(blogRequest));
+		// Create and save blog 3
+		Blog blog3 = new Blog();
+		blog3.setImage("Image link 3");
+		blog3.setBody("Body 3");
+		blog3.setPublished(true);
+		blog3.setDescription("This is description 3");
+		blog3.setTitle("This is title 3");
+		blog3.setViews(3L);
+		blog3.setCategory(category3);
+		blog3.setUser(user);
+		blog3.setTags(tags);
+		blogRepository.save(blog3);
+
+		// Create and save blog 4
+		Blog blog4 = new Blog();
+		blog4.setImage("Image link 4");
+		blog4.setBody("Body 4");
+		blog4.setPublished(true);
+		blog4.setDescription("This is description 4");
+		blog4.setTitle("This is title 4");
+		blog4.setViews(4L);
+		blog4.setCategory(category1);
+		blog4.setUser(user);
+		blog4.setTags(tags);
+		blogRepository.save(blog4);
+
+		// Create and save blog 5
+		Blog blog5 = new Blog();
+		blog5.setImage("Image link 5");
+		blog5.setBody("Body 5");
+		blog5.setPublished(true);
+		blog5.setDescription("This is description 5");
+		blog5.setTitle("This is title 5");
+		blog5.setViews(5L);
+		blog5.setCategory(category2);
+		blog5.setUser(user);
+		blog5.setTags(tags);
+		blogRepository.save(blog5);
+
+		Blog blog6 = new Blog();
+		blog6.setImage("Image link");
+		blog6.setBody("Body");
+		blog6.setPublished(true);
+		blog6.setDescription("This is description");
+		blog6.setTitle("This is title");
+		blog6.setViews(1L);
+		blog6.setCategory(category2);
+		blog6.setUser(user);
+		blog6.setTags(tags);
+		blogRepository.save(blog6);
+
+		Blog blog7 = new Blog();
+		blog7.setImage("Image link");
+		blog7.setBody("Body");
+		blog7.setPublished(true);
+		blog7.setDescription("This is description");
+		blog7.setTitle("This is title");
+		blog7.setViews(1L);
+		blog7.setCategory(category1);
+		blog7.setUser(user);
+		blog7.setTags(tags);
+		blogRepository.save(blog7);
 	}
 
 	@SuppressWarnings("unlikely-arg-type")

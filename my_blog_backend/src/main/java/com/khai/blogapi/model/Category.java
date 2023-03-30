@@ -54,6 +54,8 @@ public class Category extends UserDateAudit {
 	@JsonIgnore
 	private User user;
 	
+	private String slug;
+	
 	@JsonIgnore
 	public List<Blog> getBlogs() {
 		return blogs == null ? null : new ArrayList<>(this.blogs);

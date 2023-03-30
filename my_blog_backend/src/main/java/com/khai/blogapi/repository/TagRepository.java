@@ -8,12 +8,10 @@ import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import com.khai.blogapi.model.Blog;
 import com.khai.blogapi.model.Tag;
 
-@Repository
 @Transactional
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
@@ -24,5 +22,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 	boolean existsByName(String name);
 
 	List<Tag> findAllByBlogs(Blog blog);
+
+	List<Tag> findByBlogs(Blog blog);
 
 }

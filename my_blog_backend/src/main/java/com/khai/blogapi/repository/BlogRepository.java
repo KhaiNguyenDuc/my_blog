@@ -28,4 +28,6 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
 
 	Integer countByUser(User user);
 
+	List<Blog> findTop5ByOrderByCreatedAtDesc();
+
 }

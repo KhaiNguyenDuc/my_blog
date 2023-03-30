@@ -1,5 +1,7 @@
 package com.khai.blogapi.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,12 +68,10 @@ public class BlogController {
 	}
 	
 	@GetMapping("/{blog_id}/tags")
-	public ResponseEntity<PageResponse<TagResponse>> getTagsByBlog(
-			@PathVariable("blog_id") Long blogId,
-			@RequestParam(value = "page",defaultValue = AppConstant.DEFAULT_PAGE_NUMBER ) Integer page,
-			@RequestParam(value = "size", defaultValue = AppConstant.DEFAULT_PAGE_SIZE) Integer size){
+	public ResponseEntity<List<TagResponse>> getTagsByBlog(
+			@PathVariable("blog_id") Long blogId){
 			
-		PageResponse<TagResponse> tagResponses = tagService.getTagsByBlog(blogId,page,size);
+		List<TagResponse> tagResponses = tagService.getTagsByBlog(blogId);
 		return new ResponseEntity<>(tagResponses,HttpStatus.OK);
 	}
 	
@@ -131,4 +131,12 @@ public class BlogController {
 		BlogResponse blogResponse = blogService.updateBlogById(blogId,blogRequest,userPrincipal);
 		return new ResponseEntity<>(blogResponse,HttpStatus.OK);
 	}
+	
+	@GetMapping("/latest")
+	public ResponseEntity<List<BlogResponse>> getLatestBlogs(){
+		List<BlogResponse> blogResponses = blogService.getLatestBlogs();
+		return new ResponseEntity<>(blogResponses,HttpStatus.OK);
+	}
+	
+	
 }

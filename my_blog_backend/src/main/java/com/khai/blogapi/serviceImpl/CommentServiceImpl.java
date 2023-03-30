@@ -47,23 +47,14 @@ public class CommentServiceImpl implements CommentService {
 	ModelMapper modelMapper;
 
 	@Override
-	public PageResponse<CommentResponse> getAllComments(Integer page, Integer size) {
+	public List<CommentResponse> getAllComments() {
 
-		AppUtils.validatePageAndSize(page, size);
-		Pageable pageable = PageRequest.of(page, size);
-		Page<Comment> comments = commentRepository.findAll(pageable);
+		List<Comment> comments = commentRepository.findAll();
 		List<CommentResponse> commentResponses = Arrays
-				.asList(modelMapper.map(comments.getContent(), CommentResponse[].class));
+				.asList(modelMapper.map(comments, CommentResponse[].class));
 
-		PageResponse<CommentResponse> pageResponse = new PageResponse<>();
-		pageResponse.setContent(commentResponses);
-		pageResponse.setSize(size);
-		pageResponse.setPage(page);
-		pageResponse.setTotalElements(comments.getNumberOfElements());
-		pageResponse.setTotalPages(comments.getTotalPages());
-		pageResponse.setLast(comments.isLast());
 
-		return pageResponse;
+		return commentResponses;
 	}
 
 	@Override

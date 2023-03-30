@@ -1,28 +1,30 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { useParams } from "react-router-dom";
+import CategoryService from "../../../../services/CategoryService"
 const Category = () => {
+    const CATEGORY_ENDPOINT = process.env.REACT_APP_URL_CATEGORIES 
+    const [categories, setCategories] = useState([])
 
-    const categories = [
-        {
-            id: 1,
-            name: "Thủ thật"
-        },
-        {
-            id: 2,
-            name: "Machine learning"
-        },
-        {
-            id: 3,
-            name: "Blog"
-        },
-        {
-            id: 4,
-            name: "Đời sống"
+    useEffect(() => {
+        getAllCategories()
+    },[])
+
+
+    const getAllCategories = async () =>{
+        try{
+            const response = await CategoryService.getAllCategories()
+            setCategories(response.data)
         }
-    ]
+        catch(error){
+            console.log(error)
+        }
+        
+    }
 
     const listCategories = categories.map(category => {
         return (
-            <Link to='' className="navbar-category-link">
+            <Link to={CATEGORY_ENDPOINT+"/"+category.id} className="navbar-category-link">
                 <li key={category.id} className="p-2">
                     <b>{category.name}</b>
                 </li>

@@ -63,4 +63,6 @@ public class BlogResponse extends UserDateAudit{
 			this.tags = tags;
 		}
 	}
+	
+	private int commentCount;
 }

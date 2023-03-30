@@ -5,9 +5,6 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -20,7 +17,6 @@ import com.khai.blogapi.model.RoleName;
 import com.khai.blogapi.model.Tag;
 import com.khai.blogapi.model.User;
 import com.khai.blogapi.payload.ApiResponse;
-import com.khai.blogapi.payload.PageResponse;
 import com.khai.blogapi.payload.TagRequest;
 import com.khai.blogapi.payload.TagResponse;
 import com.khai.blogapi.repository.BlogRepository;
@@ -29,7 +25,6 @@ import com.khai.blogapi.repository.UserRepository;
 import com.khai.blogapi.security.UserPrincipal;
 import com.khai.blogapi.service.TagService;
 import com.khai.blogapi.utils.AppConstant;
-import com.khai.blogapi.utils.AppUtils;
 
 @Service
 public class TagServiceImpl implements TagService {
@@ -47,47 +42,32 @@ public class TagServiceImpl implements TagService {
 	ModelMapper modelMapper;
 
 	@Override
-	public PageResponse<TagResponse> getAllTags(Integer page, Integer size) {
+	public List<TagResponse> getAllTags() {
 		
-		AppUtils.validatePageAndSize(page,size);
-		Pageable pageable = PageRequest.of(page, size);
-		Page<Tag> tags = tagRepository.findAll(pageable);
+
+		List<Tag> tags = tagRepository.findAll();
 		List<TagResponse> tagResponses =
-				Arrays.asList(modelMapper.map(tags.getContent(),TagResponse[].class));
-		PageResponse<TagResponse> pageResponse = new PageResponse<>();
-		pageResponse.setContent(tagResponses);
-		pageResponse.setPage(page);
-		pageResponse.setSize(size);
-		pageResponse.setTotalElements(tags.getNumberOfElements());
-		pageResponse.setTotalPages(tags.getTotalPages());
-		pageResponse.setLast(tags.isLast());
-		return pageResponse;
+				Arrays.asList(modelMapper.map(tags,TagResponse[].class));
+		
+		return tagResponses;
 	}
 
 	@Override
-	public PageResponse<TagResponse> getTagsByBlog(Long blogId, Integer page, Integer size) {
+	public List<TagResponse> getTagsByBlog(Long blogId) {
 		
-		AppUtils.validatePageAndSize(page,size);
-		
-		
+	
 		Blog blog = blogRepository.findById(blogId)
 				.orElseThrow(() -> new ResourceNotFoundException(
 						AppConstant.BLOG_NOT_FOUND + blogId));
 		
-		Pageable pageable = PageRequest.of(page, size);
-		Page<Tag> tags = tagRepository.findByBlogs(blog, pageable);
+		
+		List<Tag> tags = tagRepository.findByBlogs(blog);
 		
 		List<TagResponse> tagResponses = Arrays.asList(
-				modelMapper.map(tags.getContent(), TagResponse[].class));
+				modelMapper.map(tags, TagResponse[].class));
 		
-		PageResponse<TagResponse> pageResponse = new PageResponse<>();
-		pageResponse.setContent(tagResponses);
-		pageResponse.setPage(page);
-		pageResponse.setSize(size);
-		pageResponse.setTotalElements(tags.getNumberOfElements());
-		pageResponse.setTotalPages(tags.getTotalPages());
-		pageResponse.setLast(tags.isLast());
-		return pageResponse;
+	
+		return tagResponses;
 	}
 	
 	@Override

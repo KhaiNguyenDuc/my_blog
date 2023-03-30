@@ -1,6 +1,9 @@
 package com.khai.blogapi.service;
 
+import java.util.List;
+
 import com.khai.blogapi.payload.ApiResponse;
+import com.khai.blogapi.payload.CategoryDescriptionResponse;
 import com.khai.blogapi.payload.CategoryRequest;
 import com.khai.blogapi.payload.CategoryResponse;
 import com.khai.blogapi.payload.PageResponse;
@@ -8,7 +11,7 @@ import com.khai.blogapi.security.UserPrincipal;
 
 public interface CategoryService {
 
-	PageResponse<CategoryResponse> getAllCategories(Integer page, Integer size);
+	List<CategoryResponse> getAllCategories();
 
 	CategoryResponse getCategoryById(Long categoryId);
 
@@ -21,6 +24,8 @@ public interface CategoryService {
 	CategoryResponse updateCategoryById(Long categoryId, CategoryRequest categoryRequest, UserPrincipal userPrincipal);
 
 	PageResponse<CategoryResponse> getCategoriesByUsername(String username, Integer page, Integer size);
+
+	CategoryDescriptionResponse getDescriptionByCategoryId(Long categoryId);
 
 	
 
